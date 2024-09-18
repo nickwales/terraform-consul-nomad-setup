@@ -27,6 +27,7 @@ resource "consul_acl_binding_rule" "tasks" {
   auth_method = consul_acl_auth_method.nomad.name
   description = "Binding rule for Nomad tasks"
   bind_type   = "role"
+  partition   = var.consul_admin_partition
 
   # bind_name must match the name of an ACL role to apply to tokens. You may
   # reference values from the ClaimMappings configured in the auth method to
@@ -59,6 +60,7 @@ resource "consul_acl_role" "tasks" {
   name = "${local.tasks_role_prefix}-${each.key}"
 
   description = "ACL role for Nomad tasks in the ${each.key} Nomad namespace"
+  partition   = var.consul_admin_partition
   policies    = local.tasks_policy_ids
 }
 
@@ -72,6 +74,7 @@ resource "consul_acl_policy" "tasks" {
 
   name        = var.tasks_default_policy_name
   description = "ACL policy used by Nomad tasks"
+  partition   = var.consul_admin_partition
 
   rules = <<EOF
 key_prefix "" {

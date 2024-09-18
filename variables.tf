@@ -48,3 +48,8 @@ variable "nomad_namespaces" {
   type        = list(string)
   default     = ["default"]
 }
+
+variable "consul_admin_partition" {
+  description = "The Consul Partition to apply the auth method"
+  default     = "default"
+}

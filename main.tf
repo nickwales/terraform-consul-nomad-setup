@@ -8,6 +8,7 @@ resource "consul_acl_auth_method" "nomad" {
   display_name = var.auth_method_name
   description  = "JWT auth method for Nomad services and workloads"
   type         = "jwt"
+  partition    = var.consul_admin_partition
 
   config_json = jsonencode({
     JWKSURL          = var.nomad_jwks_url
@@ -53,6 +54,7 @@ resource "consul_acl_binding_rule" "services" {
   auth_method = consul_acl_auth_method.nomad.name
   description = "Binding rule for services registered from Nomad"
   bind_type   = "service"
+  partition   = var.consul_admin_partition
 
   # bind_name matches the pattern used by Nomad to register services in Consul
   # and should not be modified.
