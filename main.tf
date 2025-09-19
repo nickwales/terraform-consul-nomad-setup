@@ -4,6 +4,7 @@
 # consul_acl_auth_method.nomad_workloads is the JWT auth method used to
 # exchange Nomad workload identities for Consul ACL tokens.
 resource "consul_acl_auth_method" "nomad" {
+  
   name         = var.auth_method_name
   display_name = var.auth_method_name
   description  = "JWT auth method for Nomad services and workloads"

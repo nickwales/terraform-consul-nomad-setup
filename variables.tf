@@ -50,6 +50,7 @@ variable "nomad_namespaces" {
 }
 
 variable "consul_admin_partition" {
-  description = "The Consul Partition to apply the auth method"
+  description = "A list of Consul Partition to apply the auth method"
+  type        = string #list(string)
   default     = "default"
 }

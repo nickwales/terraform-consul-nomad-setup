@@ -24,6 +24,8 @@ locals {
 # Refer to Consul's documentation on binding rules for more information.
 # https://developer.hashicorp.com/consul/docs/security/acl/auth-methods#binding-rules
 resource "consul_acl_binding_rule" "tasks" {
+  #for_each = toset(var.consul_admin_partition)
+
   auth_method = consul_acl_auth_method.nomad.name
   description = "Binding rule for Nomad tasks"
   bind_type   = "role"
@@ -77,12 +79,14 @@ resource "consul_acl_policy" "tasks" {
   partition   = var.consul_admin_partition
 
   rules = <<EOF
-key_prefix "" {
-  policy = "read"
-}
+namespace_prefix "" {  
+  key_prefix "" {
+    policy = "read"
+  }
 
-service_prefix "" {
-  policy = "read"
+  service_prefix "" {
+    policy = "read"
+  }
 }
 EOF
 }
